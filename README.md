@@ -40,7 +40,7 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
 
 1. **Clone repository ini**
    ```bash
-   git clone [URL repository]
+   git clone https://github.com/SteveHandy/belajar-ci-tugas.git
    cd belajar-ci-tugas
    ```
 2. **Install dependensi**
