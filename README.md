@@ -41,10 +41,9 @@ Berikut adalah rincian fitur yang telah diimplementasikan dalam proyek ini:
 - **Panel Admin**
 
   - Manajemen Produk (Tambah, Baca, Ubah, Hapus).
-  - Manajemen Kategori Produk (CRUD).
-  - Manajemen Diskon Harian (CRUD).
+  - Manajemen Kategori Produk (Tambah, Baca, Ubah, Hapus).
+  - Manajemen Diskon Harian (Tambah, Baca, Ubah, Hapus).
   - Melihat daftar transaksi yang masuk.
-  - (Rencana) Export data ke PDF.
 
 - **Sistem Autentikasi**
 
@@ -143,7 +142,7 @@ Proyek ini menggunakan struktur direktori standar dari CodeIgniter 4 (MVC) denga
     - `DiskonController.php`: Logika CRUD untuk data diskon.
     - `TransaksiController.php`: Mengelola proses checkout dan menampilkan riwayat transaksi (`indexList`).
   - `Database/`
-    - `Migrations/`: Berisi file-file untuk membuat dan memodifikasi skema database secara terstruktur. Contoh: `..._CreateDiskon.php`.
+    - `Migrations/`: Berisi file-file untuk membuat dan memodifikasi skema database secara terstruktur. Contoh: `..._Diskon.php`.
     - `Seeds/`: Berisi file untuk mengisi data awal ke database.
       - `DatabaseSeeder.php`: Seeder utama.
       - `DiskonSeeder.php`: Mengisi data diskon untuk 10 hari.
