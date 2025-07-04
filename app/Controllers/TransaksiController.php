@@ -2,8 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\TransactionDetailModel;
+use App\Models\DiskonModel;
 use App\Models\TransactionModel;
+use App\Models\TransactionDetailModel;
 
 class TransaksiController extends BaseController
 {
@@ -12,6 +13,7 @@ class TransaksiController extends BaseController
     protected $apiKey;
     protected $transaction;
     protected $transaction_detail;
+    protected $diskon;
 
     function __construct()
     {
@@ -22,6 +24,7 @@ class TransaksiController extends BaseController
         $this->apiKey = env('COST_KEY');
         $this->transaction = new TransactionModel();
         $this->transaction_detail = new TransactionDetailModel();
+        $this->diskon = new DiskonModel();
     }
 
     public function index()
@@ -33,10 +36,11 @@ class TransaksiController extends BaseController
 
     public function cart_add()
     {
+        $diskonHariIni = $this->diskon->getDiskonHariIni();
         $this->cart->insert(array(
             'id'        => $this->request->getPost('id'),
             'qty'       => 1,
-            'price'     => $this->request->getPost('harga'),
+            'price'     => (float)$this->request->getPost('harga') - $diskonHariIni['nominal'],
             'name'      => $this->request->getPost('nama'),
             'options'   => array('foto' => $this->request->getPost('foto'))
         ));
@@ -156,13 +160,14 @@ class TransaksiController extends BaseController
             $this->transaction->insert($dataForm);
 
             $last_insert_id = $this->transaction->getInsertID();
+            $diskonHariIni = $this->diskon->getDiskonHariIni();
 
             foreach ($this->cart->contents() as $value) {
                 $dataFormDetail = [
                     'transaction_id' => $last_insert_id,
                     'product_id' => $value['id'],
                     'jumlah' => $value['qty'],
-                    'diskon' => 0,
+                    'diskon' => ($diskonHariIni) ? $diskonHariIni['nominal'] : 0,
                     'subtotal_harga' => $value['qty'] * $value['price'],
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -176,4 +181,32 @@ class TransaksiController extends BaseController
             return redirect()->to(base_url());
         }
     }
+
+    public function indexList()
+    {
+        $semuaTransaksi = $this->transaction->orderBy('created_at', 'DESC')->findAll();
+
+        $dataLengkap = [];
+
+        foreach ($semuaTransaksi as $transaksi) {
+            // Query ini sudah sangat baik!
+            $detailItems = $this->transaction_detail
+                ->select('transaction_detail.*, product.foto as gambar_produk, product.nama as nama_produk,product.harga as harga_produk')
+                ->join('product', 'product.id = transaction_detail.product_id', 'left')
+                ->where('transaction_id', $transaksi['id'])
+                ->findAll();
+
+            // Logika untuk menggabungkan data juga sudah benar
+            $transaksi['detail_items'] = $detailItems;
+            $dataLengkap[] = $transaksi;
+        }
+
+        $data['daftar_transaksi'] = $dataLengkap;
+
+        // Saran: Pastikan nama view ini mengarah ke file yang berisi daftar riwayat,
+        // bukan ke view form/keranjang transaksi.
+        return view('v_transaksi', $data);
+    }
+
+    public function viewDetail() {}
 }

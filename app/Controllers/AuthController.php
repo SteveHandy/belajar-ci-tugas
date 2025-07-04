@@ -3,17 +3,20 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\DiskonModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\UserModel;
 
 class AuthController extends BaseController
 {
     protected $user;
+    protected $diskon;
 
     function __construct()
     {
         helper('form');
         $this->user = new UserModel();
+        $this->diskon = new DiskonModel();
     }
     public function login()
     {
@@ -31,10 +34,12 @@ class AuthController extends BaseController
 
                 if ($dataUser) {
                     if (password_verify($password, $dataUser['password'])) {
+                        $diskonHariIni = $this->diskon->getDiskonHariIni();
                         session()->set([
                             'username' => $dataUser['username'],
                             'role' => $dataUser['role'],
-                            'isLoggedIn' => TRUE
+                            'isLoggedIn' => TRUE,
+                            'diskon_hari_ini' => $diskonHariIni['nominal'],
                         ]);
 
                         return redirect()->to(base_url('/'));
