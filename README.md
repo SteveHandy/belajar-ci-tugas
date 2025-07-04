@@ -104,7 +104,7 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal A
       ```
 
 4.  **Jalankan Migrasi Database**
-    Perintah ini akan membuat semua tabel yang dibutuhkan (`produk`, `kategori`, `users`, `transaksi`, `transaksi_detail`, `diskon`, dll.) secara otomatis berdasarkan file migrasi.
+    Perintah ini akan membuat semua tabel yang dibutuhkan (`product`, `product_category`, `user`, `transaction`, `transaction_detail`, `diskon`, `migrations`.) secara otomatis berdasarkan file migrasi.
 
     ```bash
     php spark migrate
