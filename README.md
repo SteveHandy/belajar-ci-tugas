@@ -135,12 +135,12 @@ Proyek ini menggunakan struktur direktori standar dari CodeIgniter 4 (MVC) denga
 
 - `app/`
   - `Config/`
-    - `Routes.php`: Mendefinisikan URL kustom dan mengarahkannya ke metode Controller yang sesuai (misal: `/transaksi/list`).
+    - `Routes.php`: Mendefinisikan URL kustom dan mengarahkannya ke metode Controller yang sesuai (misal: `/transaksi`).
   - `Controllers/` - Berisi logika utama aplikasi untuk menangani permintaan pengguna.
     - `AuthController.php`: Mengelola proses login, registrasi, dan logout.
     - `ProdukController.php`: Logika CRUD untuk data produk.
     - `DiskonController.php`: Logika CRUD untuk data diskon.
-    - `TransaksiController.php`: Mengelola proses checkout dan menampilkan riwayat transaksi (`indexList`).
+    - `TransaksiController.php`: Mengelola proses checkout dan menampilkan riwayat transaksi.
   - `Database/`
     - `Migrations/`: Berisi file-file untuk membuat dan memodifikasi skema database secara terstruktur. Contoh: `..._Diskon.php`.
     - `Seeds/`: Berisi file untuk mengisi data awal ke database.
@@ -157,8 +157,8 @@ Proyek ini menggunakan struktur direktori standar dari CodeIgniter 4 (MVC) denga
     - `layout.php`: Template utama yang digunakan oleh halaman lain.
     - `v_produk.php`: Halaman katalog produk.
     - `v_keranjang.php`: Halaman keranjang belanja.
-    - `diskon_view.php`: Halaman CRUD untuk manajemen diskon di panel admin.
-    - `v_transaksi_list.php`: Halaman untuk menampilkan riwayat transaksi dengan detail yang bisa diekspansi.
+    - `v_diskon.php`: Halaman CRUD untuk manajemen diskon di panel admin.
+    - `v_transaksi.php`: Halaman untuk menampilkan riwayat transaksi dengan detail yang bisa diekspansi.
     - `partials/header.php`: Komponen header yang berisi logika untuk menampilkan diskon dinamis.
 - `public/` - Direktori yang dapat diakses publik.
   - `img/`: Tempat untuk menyimpan gambar produk dan aset lainnya.
